@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- specifies character encoding -->
+        <meta charset="UTF-8">
+
+        <!-- css stylesheet -->
+        <link type="text/css" rel="stylesheet" href="style.css">
+
+        <!-- bootstrap -->
+        
+        <title>Dadu</title>
+    </head>
+
+    <body>
+        <div>
+            <!-- player1 -->
+            <div class="player-1-panel active">
+                <div class="player-name" id="name-1">PLAYER 1</div>
+                <div class="player-global-score" id="global-1"></div>
+                <div class="player-current-box">
+                    <div class="player-round-label">Current</div>
+                    <div class="player-round-score" id="current-1">0</div>
+                </div>
+            </div>
+            
+            <!-- player2 -->
+            <div class="player-1-panel">
+                <div class="player-name" id="name-2">PLAYER 2</div>
+                <div class="player-global-score" id="global-2"></div>
+                <div class="player-current-box">
+                    <div class="player-round-label">Current</div>
+                    <div class="player-round-score" id="current-2">0</div>
+                </div>
+            </div>
+            
+            <!-- starts a new game -->
+            <button class="btn-new">NEW GAME</button>
+
+            <!--  -->
+            <button class="btn-roll">ROLL DICE</button>
+            <button class="btn-hold">HOLD</button>
+            
+            <!-- set winning target -->
+            <input type="text" placeholder="Winning Score" class="winning-score">
+            
+            <!-- default dice display for new game -->
+            <img src="dice-0.png" alt="Dice" class="dice" id="dice-1">
+            <img src="dice-0.png" alt="Dice" class="dice" id="dice-2">
+        </div>
+    </body>
+</html>
