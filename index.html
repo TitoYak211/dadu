@@ -24,39 +24,32 @@
 
     <body>
         <div class="wrapper clearfix">
-            <!-- player1 -->
-            <div class="player-1-panel active">
-                <div class="player-name" id="name-1">PLAYER 1</div>
-                <div class="player-global-score" id="global-1"></div>
+            <div class="player-0-panel active">
+                <div class="player-name" id="name-0">Player 1</div>
+                <div class="player-score" id="score-0">43</div>
                 <div class="player-current-box">
-                    <div class="player-round-label">Current</div>
-                    <div class="player-round-score" id="current-1">0</div>
+                    <div class="player-current-label">Current</div>
+                    <div class="player-current-score" id="current-0">11</div>
                 </div>
             </div>
             
-            <!-- player2 -->
             <div class="player-1-panel">
-                <div class="player-name" id="name-2">PLAYER 2</div>
-                <div class="player-global-score" id="global-2"></div>
+                <div class="player-name" id="name-1">Player 2</div>
+                <div class="player-score" id="score-1">72</div>
                 <div class="player-current-box">
-                    <div class="player-round-label">Current</div>
-                    <div class="player-round-score" id="current-2">0</div>
+                    <div class="player-current-label">Current</div>
+                    <div class="player-current-score" id="current-1">0</div>
                 </div>
             </div>
             
-            <!-- starts a new game -->
-            <button class="btn-new">NEW GAME</button>
-
-            <!--  -->
-            <button class="btn-roll">ROLL DICE</button>
-            <button class="btn-hold">HOLD</button>
+            <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
+            <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
+            <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
             
-            <!-- set winning target -->
-            <input type="text" placeholder="Winning Score" class="winning-score">
+            <input type="text" placeholder="Final score" class="final-score">
             
-            <!-- default dice display for new game -->
-            <img src="img/dice-5.png" alt="Dice" class="dice" id="dice-1">
-            <img src="img/dice-5.png" alt="Dice" class="dice" id="dice-2">
+            <img src="dice-5.png" alt="Dice" class="dice" id="dice-1">
+            <img src="dice-5.png" alt="Dice" class="dice" id="dice-2">
         </div>
 
         <!-- Javascript -->
