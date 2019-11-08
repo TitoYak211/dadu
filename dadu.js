@@ -30,7 +30,6 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     }    
 });
 
-
 document.querySelector('.btn-hold').addEventListener('click', function() {
     if (gamePlaying) {
         // Add CURRENT score to GLOBAL score
@@ -42,6 +41,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         let input = document.querySelector('.final-score').value;
         let winningScore;
         
+        // set winning score
         if(input) {
             winningScore = input;
         } else {
@@ -80,6 +80,7 @@ function nextPlayer() {
     document.getElementById('dice-2').style.display = 'none';
 }
 
+// new game event
 document.querySelector('.btn-new').addEventListener('click', init);
 
 // New game
