@@ -5,17 +5,17 @@ init();
 // round play
 document.querySelector('.btn-roll').addEventListener('click', function() {
     if(gamePlaying) {
-        // roll random number for player 1
+        // roll random numbers
         let dice1 = Math.floor(Math.random() * 6) + 1;
-
-        // roll random number for player 2
         let dice2 = Math.floor(Math.random() * 6) + 1;
+
+        // update src path
+        document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+        document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 
         // display dice roll result
         document.getElementById('dice-1').style.display = 'block';
         document.getElementById('dice-2').style.display = 'block';
-        document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
-        document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
 
         // update the round score IF a rolled number is NOT a 1
         if (dice1 !== 1 && dice2 !== 1) {
