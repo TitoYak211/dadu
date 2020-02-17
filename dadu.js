@@ -10,8 +10,8 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         let dice2 = Math.floor(Math.random() * 6) + 1;
 
         // update src path
-        document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
-        document.getElementById('dice-2').src = 'dice-' + dice2 + '.png';
+        document.getElementById('dice-1').src = 'static/img/dice-' + dice1 + '.png';
+        document.getElementById('dice-2').src = 'static/img/dice-' + dice2 + '.png';
 
         // display dice roll result
         document.getElementById('dice-1').style.display = 'block';
