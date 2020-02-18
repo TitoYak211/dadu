@@ -39,7 +39,7 @@
 }
 
 body {
-    background-image: url(static/img/dadu.jpg);
+    background-image: url(../img/dadu.jpg);
     background-size: cover;
     background-position: center;
     font-family: Lato;
