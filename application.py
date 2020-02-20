@@ -1,4 +1,5 @@
 import os
+import psycopg2
 import requests
 from flask import Flask, request, render_template, url_for, flash, jsonify, redirect, session, json, Response, views, make_response, Markup
 from flask_session import Session
@@ -17,13 +18,16 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
+# Check for environment variable
+if not os.getenv("DATABASE_URL"):
+    raise RuntimeError("DATABASE_URL is not set")
+
 # Configure session to use filesystem (instead of signed cookies)
-# app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-engine = create_engine("sqlite:///data.db", encoding='latin1', echo=True)
+engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 def apology(message, code=400):
