@@ -62,6 +62,21 @@ def index():
     return render_template("index.html", **locals())
 
 
+@app.route("/verify", methods=["GET"])
+def verify():
+    """Return true if username available, else false, in JSON format"""
+    if request.method == 'GET':
+        user = request.args.get("username")
+
+        records = db.execute("SELECT * FROM users WHERE username = :username", username=user)
+
+        if len(records) != 0:
+            return jsonify(False)
+
+        else:
+            return jsonify(True)
+
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -81,17 +96,17 @@ def register():
             return apology("passwords do not match", 400)
 
         # hash the password and insert a new user in the database
-        # hash = generate_password_hash(request.form.get("password"))
-        # new_user_id = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)",
-        #                          username=request.form.get("username"),
-        #                          hash=hash)
+        hash = generate_password_hash(request.form.get("password"))
+        new_user_id = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)",
+                                 username=request.form.get("username"),
+                                 hash=hash)
 
         # unique username constraint violated?
-        # if not new_user_id:
-        #     return apology("username taken", 400)
+        if not new_user_id:
+            return apology("username taken", 400)
 
         # Remember which user has logged in
-        # session["user_id"] = new_user_id
+        session["user_id"] = new_user_id
 
         # Display a flash message
         flash("Registered!")
@@ -122,15 +137,15 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        # rows = db.execute("SELECT * FROM users WHERE username = :username",
-        #                   username=request.form.get("username"))
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+                          username=request.form.get("username"))
 
         # Ensure username exists and password is correct
-        # if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-        #     return apology("invalid username and/or password", 403)
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        # session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
         return redirect("/")
