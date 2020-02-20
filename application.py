@@ -62,6 +62,47 @@ def index():
     return render_template("index.html", **locals())
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """Register user"""
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 400)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 400)
+
+        # Ensure password and confirmation match
+        elif not request.form.get("password") == request.form.get("confirmation"):
+            return apology("passwords do not match", 400)
+
+        # hash the password and insert a new user in the database
+        # hash = generate_password_hash(request.form.get("password"))
+        # new_user_id = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)",
+        #                          username=request.form.get("username"),
+        #                          hash=hash)
+
+        # unique username constraint violated?
+        # if not new_user_id:
+        #     return apology("username taken", 400)
+
+        # Remember which user has logged in
+        # session["user_id"] = new_user_id
+
+        # Display a flash message
+        flash("Registered!")
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # else if user reached route via GET
+    else:
+        return render_template("register.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
