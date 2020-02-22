@@ -1,6 +1,7 @@
 import os
 import psycopg2
 import requests
+from tables import User
 from flask import Flask, request, render_template, url_for, flash, jsonify, redirect, session, json, Response, views, make_response, Markup
 from flask_session import Session
 from functools import wraps
@@ -72,7 +73,7 @@ def verify():
     if request.method == 'GET':
         user = request.args.get("username")
 
-        records = db.execute("SELECT * FROM users WHERE username = :username", username=user)
+        user = User.query.filter_by(username=username).first_or_404()
 
         if len(records) != 0:
             return jsonify(False)
@@ -101,16 +102,17 @@ def register():
 
         # hash the password and insert a new user in the database
         hash = generate_password_hash(request.form.get("password"))
-        new_user_id = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)",
-                                 username=request.form.get("username"),
-                                 hash=hash)
+
+        new_user = User( request.form.get("username"), hash)
+        db.session.add(new_user)
+        db.session.commit()
 
         # unique username constraint violated?
-        if not new_user_id:
+        if not new_user:
             return apology("username taken", 400)
 
         # Remember which user has logged in
-        session["user_id"] = new_user_id
+        session["user_id"] = new_user.id
 
         # Display a flash message
         flash("Registered!")
@@ -141,15 +143,14 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username",
-                          username=request.form.get("username"))
+        user = User.query.filter_by(username=request.form.get("username")).all()
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(user) != 1 or not check_password_hash(user.password, request.form.get("password")):
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = user.id
 
         # Redirect user to home page
         return redirect("/")
