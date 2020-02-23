@@ -43,7 +43,7 @@ def apology(message, code=400):
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
         return s
-    return render_template("apology.html", top=code, bottom=escape(message)), code
+    return render_template("error_404.html", top=code, bottom=escape(message)), code
 
 
 def login_required(f):
@@ -101,9 +101,8 @@ def register():
             return apology("passwords do not match", 400)
 
         # hash the password and insert a new user in the database
-        hash = generate_password_hash(request.form.get("password"))
 
-        new_user = User( request.form.get("username"), hash)
+        new_user = User( request.form.get("username"), generate_password_hash(request.form.get("password")))
         db.session.add(new_user)
         db.session.commit()
 
