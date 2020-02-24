@@ -1,10 +1,10 @@
 import os
 import psycopg2
 import requests
-from tables import User
+from tables import *
+from helpers import *
 from flask import Flask, request, render_template, url_for, flash, jsonify, redirect, session, json, Response, views, make_response, Markup
 from flask_session import Session
-from functools import wraps
 from werkzeug.exceptions import HTTPException
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
@@ -30,35 +30,6 @@ Session(app)
 
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-
-def apology(message, code=400):
-    """Render message as an apology to user."""
-    def escape(s):
-        """
-        Escape special characters.
-
-        https://github.com/jacebrowning/memegen#special-characters
-        """
-        for old, new in [("-", "--"), (" ", "-"), ("_", "__"), ("?", "~q"),
-                         ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
-            s = s.replace(old, new)
-        return s
-    return render_template("error_404.html", top=code, bottom=escape(message)), code
-
-
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
-
 
 @app.route("/", methods=["GET"])
 @login_required
@@ -102,7 +73,7 @@ def register():
 
         # hash the password and insert a new user in the database
 
-        new_user = User( request.form.get("username"), generate_password_hash(request.form.get("password")))
+        new_user = User( username = request.form.get("username"), password = generate_password_hash(request.form.get("password")))
         db.session.add(new_user)
         db.session.commit()
 
@@ -142,7 +113,7 @@ def login():
             return apology("must provide password", 403)
 
         # Query database for username
-        user = User.query.filter_by(username=request.form.get("username")).all()
+        user = users.query.filter_by(username=request.form.get("username")).all()
 
         # Ensure username exists and password is correct
         if len(user) != 1 or not check_password_hash(user.password, request.form.get("password")):
