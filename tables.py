@@ -12,6 +12,3 @@ class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-
-    def add_user(self, user):
-        self.users.append(p)

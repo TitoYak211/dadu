@@ -35,7 +35,10 @@ db = scoped_session(sessionmaker(bind=engine))
 @login_required
 def index():
     """Show homepage"""
-    return render_template("index.html", **locals())
+    if session["user"] is None:
+        return login()
+    else:
+        return render_template("index.html")
 
 
 @app.route("/verify", methods=["GET"])
