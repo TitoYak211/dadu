@@ -1,5 +1,4 @@
 import os
-import requests
 
 from flask import Flask, session, render_template, request
 from flask_session import Session
