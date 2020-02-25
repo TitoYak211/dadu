@@ -49,9 +49,6 @@ def register():
 
         # create new user
         new_user = User(username = request.form.get("username"), password = request.form.get("password"))
-        print(new_user.username)
-        print(new_user.password)
-        print(db)
         # db.session.add(new_user)
         # db.session.commit()
 
