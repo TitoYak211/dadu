@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, render_template
-from model import User, User
+from model import User, db
 
 app = Flask(__name__)
 app.config["SQLACHEMY_DATABASE_URL"] = os.getenv("DATABASE_URL")

@@ -6,8 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import *
 from model import *
-
-app = Flask(__name__)
+from tables import app
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
