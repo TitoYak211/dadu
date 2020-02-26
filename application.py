@@ -47,6 +47,12 @@ def register():
         elif not request.form.get("password") == request.form.get("confirmation"):
             return apology("passwords do not match", 400)
 
+        user = User.query.filter_by(username=request.form.get("username")).first()
+        
+        # unique username constraint violated?
+        if user:
+            return apology("username taken", 400)
+
         # create new user
         new_user = User(username = request.form.get("username"), password = request.form.get("password"))
 
@@ -55,12 +61,11 @@ def register():
         session.add(new_user)
         session.commit()
 
-        # unique username constraint violated?
-        # if not new_user:
-        #     return apology("username taken", 400)
+        # get current user
+        user = User.query.filter_by(username=request.form.get("username")).first()
 
         # Remember which user has logged in
-        # session["user_id"] = new_user.id
+        session["user_id"] = user.id
 
         # Display a flash message
         flash("Registered!")
