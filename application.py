@@ -49,8 +49,14 @@ def register():
 
         # create new user
         new_user = User(username = request.form.get("username"), password = request.form.get("password"))
-        # db.session.add(new_user)
-        # db.session.commit()
+
+        session = db()
+
+        session.add(new_user)
+        # today = date.today()
+        # print(today)
+        session.commit()
+        # db.commit()
 
         # unique username constraint violated?
         # if not new_user:
