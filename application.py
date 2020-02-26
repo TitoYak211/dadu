@@ -53,10 +53,7 @@ def register():
         session = db()
 
         session.add(new_user)
-        # today = date.today()
-        # print(today)
         session.commit()
-        # db.commit()
 
         # unique username constraint violated?
         # if not new_user:
