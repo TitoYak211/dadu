@@ -6,7 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import *
 from model import *
-from tables import app
+
+app = Flask(__name__)
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -15,11 +16,12 @@ if not os.getenv("DATABASE_URL"):
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+db.init_app(app)
 Session(app)
 
-# Set up database
-engine = create_engine(os.getenv("DATABASE_URL"))
-db = scoped_session(sessionmaker(bind=engine))
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.route("/")
 def index():
@@ -55,10 +57,8 @@ def register():
         # create new user
         new_user = User(username = request.form.get("username"), password = request.form.get("password"))
 
-        session = db()
-
-        session.add(new_user)
-        session.commit()
+        db.session.add(new_user)
+        db.session.commit()
 
         # get current user
         user = User.query.filter_by(username=request.form.get("username")).first()
