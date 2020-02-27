@@ -23,7 +23,8 @@ Session(app)
 def create_tables():
     db.create_all()
 
-@app.route("/")
+@app.route("/", methods=["GET"])
+@login_required
 def index():
     """Main page"""
     
@@ -75,3 +76,51 @@ def register():
     # else if user reached route via GET
     else:
         return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """Log user in"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 403)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 403)
+
+        # Query database for username
+        user = User.query.filter_by(username=request.form.get("username")).all()
+        print(user[0])
+
+        # Ensure username exists and password is correct
+        if len(user) != 1:
+            return apology("invalid username and/or password", 403)
+
+        # Remember which user has logged in
+        session["user_id"] = user[0].id
+
+        # Redirect user to home page
+        return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
