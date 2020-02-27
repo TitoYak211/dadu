@@ -16,6 +16,7 @@ if not os.getenv("DATABASE_URL"):
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 Session(app)
 
@@ -98,7 +99,7 @@ def login():
 
         # Query database for username
         user = User.query.filter_by(username=request.form.get("username")).all()
-        print(user[0])
+        # print(user[0])
 
         # Ensure username exists and password is correct
         if len(user) != 1:

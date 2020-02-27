@@ -1,14 +1,5 @@
-import os
-from flask import Flask, request, render_template
-from model import *
 
-app = Flask(__name__)
-app.config["SQLACHEMY_DATABASE_URL"] = os.getenv("DATABASE_URL")
-app.config["SQLACHEMY_TRACK_MODIFICATIONS"] = False
+from model import db, User
 
-def main():
+def create():
     db.create_all()
-
-if __name__ == "__main__":
-    with app.app_context():
-        main()
