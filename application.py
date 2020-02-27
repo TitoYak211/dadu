@@ -2,8 +2,6 @@ import os
 
 from flask import Flask, session, render_template, request, flash
 from flask_session import Session
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from helpers import *
 from model import *
 
@@ -28,9 +26,11 @@ def create_tables():
 @app.route("/", methods=["GET"])
 @login_required
 def index():
-    """Main page"""
-    
-    return render_template("index.html")
+    """Show homepage"""
+    if session["user_id"] is None:
+        return login()
+    else:
+        return render_template("index.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -100,7 +100,7 @@ def login():
 
         # Query database for username
         user = User.query.filter_by(username=request.form.get("username")).all()
-        
+
         # Ensure username exists and password is correct
         if len(user) != 1:
             return apology("invalid username and/or password", 403)
