@@ -52,7 +52,7 @@ body {
 .wrapper {
     width: 1000px;
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
@@ -196,6 +196,11 @@ nav .navbar-brand
 {
     /* size for brand */
     font-size: xx-large;
+}
+
+#navbar a {
+    font-size: x-large;
+    color: rgba(0,0,0,.9);
 }
 
 main .form-control
