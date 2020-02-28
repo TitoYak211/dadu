@@ -1,7 +1,7 @@
-                                                  # Dadu
+   # Dadu
 This is a "jeopardy dice game" in which the dominant decision is whether or not to jeopardize your previous gains by rolling for potential greater gains. 
 
-                                             # Rules and Procedures
+   # Rules and Procedures
 Each turn, a player repeatedly rolls two dice until either a 1 is rolled or the player decides to "hold":
 1. If a single 1 is rolled, the player scores nothing and the turn ends.
 2. If the player rolls a 1, they score nothing and it becomes the next player's turn.
