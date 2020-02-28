@@ -1,4 +1,4 @@
-# dadu
+# Dadu
 This is a "jeopardy dice game" in which the dominant decision is whether or not to jeopardize your previous gains by rolling for potential greater gains. 
 
 # Rules and Procedures
