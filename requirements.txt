@@ -1,0 +1,8 @@
+Flask
+Flask-Session
+psycopg2-binary
+SQLAlchemy
+flask_sqlalchemy
+datetime
+gunicorn
+Werkzeug==0.16.0
