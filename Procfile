@@ -1,1 +1,1 @@
-web: gunicorn dice.wsgi --preload
+web: gunicorn application.py
