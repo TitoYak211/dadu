@@ -1,1 +1,1 @@
-web: gunicorn dadu.wsgi --preload
+web: gunicorn application.wsgi --preload
