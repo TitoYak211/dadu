@@ -2,3 +2,6 @@ Flask
 Flask-Session
 psycopg2-binary
 SQLAlchemy
+flask_sqlalchemy
+datetime
+functools
